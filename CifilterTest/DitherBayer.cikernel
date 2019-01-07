@@ -1,0 +1,148 @@
+    //
+    //  DitherBayer.cikernel
+    //  Filterpedia
+    //
+    //  Created by African Swift on 09/02/2016.
+    //  Copyright © 2016 Simon Gladman. All rights reserved.
+    //
+    //  This program is free software: you can redistribute it and/or modify
+    //  it under the terms of the GNU General Public License as published by
+    //  the Free Software Foundation, either version 3 of the License, or
+    //  (at your option) any later version.
+    //
+    //  This program is distributed in the hope that it will be useful,
+    //  but WITHOUT ANY WARRANTY; without even the implied warranty of
+    //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    //  GNU General Public License for more details.
+    //
+    //  You should have received a copy of the GNU General Public License
+    //  along with this program.  If not, see <http://www.gnu.org/licenses/>
+    //
+    //
+    // Ordered Dithering:
+    //      Non Diffusion Dithering (i.e. specifically no diffusion of errors).
+    //
+    // Algorithm:
+    //      Bayer Matrix (2x2, 3x3, 4x4 and 8x8)
+    //
+    // Reference:
+    //      https://en.wikipedia.org/wiki/Ordered_dithering
+    //
+    // Color Palettes:
+    //      1) Binary:  Black 0x00 and white 0xFF using only the red component.
+    //      2) Commodore 64
+    //      3) Vic-20
+    //      4) Apple II
+    //      5) ZX Spectrum Bright
+    //      6) ZX Spoectrum Dim
+    //      7) RGB
+float orderedDither8x8(float colorin, float bx, float by, float errorIntensity)
+{
+    float error = 0.0;
+    int px = int(bx);
+    int py = int(by);
+    if (py == 0) {
+        if (px == 0) { error =  1.0 / 65.0; }
+        if (px == 1) { error = 49.0 / 65.0; }
+        if (px == 2) { error = 13.0 / 65.0; }
+        if (px == 3) { error = 61.0 / 65.0; }
+        if (px == 4) { error =  4.0 / 65.0; }
+        if (px == 5) { error = 52.0 / 65.0; }
+        if (px == 6) { error = 16.0 / 65.0; }
+        if (px == 7) { error = 64.0 / 65.0; }
+    }
+    if (py == 1) {
+        if (px == 0) { error = 33.0 / 65.0; }
+        if (px == 1) { error = 17.0 / 65.0; }
+        if (px == 2) { error = 45.0 / 65.0; }
+        if (px == 3) { error = 29.0 / 65.0; }
+        if (px == 4) { error = 36.0 / 65.0; }
+        if (px == 5) { error = 20.0 / 65.0; }
+        if (px == 6) { error = 48.0 / 65.0; }
+        if (px == 7) { error = 32.0 / 65.0; }
+    }
+    if (py == 2) {
+        if (px == 0) { error =  9.0 / 65.0; }
+        if (px == 1) { error = 57.0 / 65.0; }
+        if (px == 2) { error =  5.0 / 65.0; }
+        if (px == 3) { error = 53.0 / 65.0; }
+        if (px == 4) { error = 12.0 / 65.0; }
+        if (px == 5) { error = 60.0 / 65.0; }
+        if (px == 6) { error =  8.0 / 65.0; }
+        if (px == 7) { error = 56.0 / 65.0; }
+    }
+    if (py == 3) {
+        if (px == 0) { error = 41.0 / 65.0; }
+        if (px == 1) { error = 25.0 / 65.0; }
+        if (px == 2) { error = 37.0 / 65.0; }
+        if (px == 3) { error = 21.0 / 65.0; }
+        if (px == 4) { error = 44.0 / 65.0; }
+        if (px == 5) { error = 28.0 / 65.0; }
+        if (px == 6) { error = 40.0 / 65.0; }
+        if (px == 7) { error = 24.0 / 65.0; }
+    }
+    if (py == 4) {
+        if (px == 0) { error =  3.0 / 65.0; }
+        if (px == 1) { error = 51.0 / 65.0; }
+        if (px == 2) { error = 15.0 / 65.0; }
+        if (px == 3) { error = 63.0 / 65.0; }
+        if (px == 4) { error =  2.0 / 65.0; }
+        if (px == 5) { error = 50.0 / 65.0; }
+        if (px == 6) { error = 14.0 / 65.0; }
+        if (px == 7) { error = 62.0 / 65.0; }
+    }
+    if (py == 5) {
+        if (px == 0) { error = 35.0 / 65.0; }
+        if (px == 1) { error = 19.0 / 65.0; }
+        if (px == 2) { error = 47.0 / 65.0; }
+        if (px == 3) { error = 31.0 / 65.0; }
+        if (px == 4) { error = 34.0 / 65.0; }
+        if (px == 5) { error = 18.0 / 65.0; }
+        if (px == 6) { error = 46.0 / 65.0; }
+        if (px == 7) { error = 30.0 / 65.0; }
+    }
+    if (py == 6) {
+        if (px == 0) { error = 11.0 / 65.0; }
+        if (px == 1) { error = 59.0 / 65.0; }
+        if (px == 2) { error =  7.0 / 65.0; }
+        if (px == 3) { error = 55.0 / 65.0; }
+        if (px == 4) { error = 10.0 / 65.0; }
+        if (px == 5) { error = 58.0 / 65.0; }
+        if (px == 6) { error =  6.0 / 65.0; }
+        if (px == 7) { error = 54.0 / 65.0; }
+    }
+    if (py == 7) {
+        if (px == 0) { error = 43.0 / 65.0; }
+        if (px == 1) { error = 27.0 / 65.0; }
+        if (px == 2) { error = 39.0 / 65.0; }
+        if (px == 3) { error = 23.0 / 65.0; }
+        if (px == 4) { error = 42.0 / 65.0; }
+        if (px == 5) { error = 26.0 / 65.0; }
+        if (px == 6) { error = 38.0 / 65.0; }
+        if (px == 7) { error = 22.0 / 65.0; }
+    }
+    return colorin * (error * 2.0 * errorIntensity + (1.0 - errorIntensity));
+}
+
+kernel vec4 ditherBayer(sampler image, float intensity)
+{
+    vec4 pixel = sample(image, samplerCoord(image));
+    int msize = int(8);
+
+    vec2 position = samplerCoord(image);
+    vec2 size = samplerSize(image);
+    vec2 offset = size * position;
+    
+    float px = mod(offset.x, float(msize));
+    float py = mod(offset.y, float(msize));
+
+    float red = pixel.r;
+    float green = pixel.g;
+    float blue = pixel.b;
+
+    pixel.r = orderedDither8x8(red, px, py, intensity);
+    pixel.g = orderedDither8x8(green, px, py, intensity);
+    pixel.b = orderedDither8x8(blue, px, py, intensity);
+    
+    return pixel;
+}
